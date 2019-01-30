@@ -1,0 +1,32 @@
+[
+{
+  "model": "posts.category",
+  "pk": 1,
+  "fields": {
+    "name": "Nature",
+    "is_active": true,
+    "meta_keywords": "",
+    "description": ""
+  }
+},
+{
+  "model": "posts.category",
+  "pk": 2,
+  "fields": {
+    "name": "Media",
+    "is_active": true,
+    "meta_keywords": "",
+    "description": ""
+  }
+},
+{
+  "model": "posts.category",
+  "pk": 3,
+  "fields": {
+    "name": "Sport",
+    "is_active": true,
+    "meta_keywords": "",
+    "description": ""
+  }
+}
+]

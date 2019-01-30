@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{%block post%}
+{%for person_list in context%}
+	{%for person in person_list%}
+      <div class="blog-post">
+        <h2 class="blog-post-title">{{person.person.name}}</h2>
+        <p class="blog-post-meta">{{person.group.name}}
+
+
+      </div><!-- /.blog-post -->
+
+	{%endfor%}
+{%endblock%}
