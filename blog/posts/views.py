@@ -23,13 +23,12 @@ class PostsList(ListView):
     	context['categorys_posts'] = Post.objects.all().filter(category__id = category.id)
     	return context'''
 
-class PostDetail(DetailView):
+def post_detail(request, post_id):
 
-	model = Post
-	template_name = 'posts/post_detail.html'
+    post = Post.objects.get(id=post_id)
+    context = {'post':post}
+    return render(request, 'posts/post_detail.html', context)
 
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['posts_list'] = Post.objects.all()
-		context['post'] = Post.objects.all().filter(_id = post_id)
-		return context
+def category
+
+

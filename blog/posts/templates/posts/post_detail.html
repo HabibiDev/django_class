@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {%block post%}
 	  <div class="blog-post">
-        <h2 class="blog-post-title"><a href="{% url  post_detail_post.id %}">{{post.title}}</a></h2>
+        <h2 class="blog-post-title"><a href="{% url  'post_detail' post.id %}">{{post.title}}</a></h2>
 
         <p class="blog-post-meta">{{post.created_on}} Категория:{{post.category}}</p>
 
@@ -17,3 +17,6 @@
 
 <a class="p-2 text-muted" href="#">{{category.name}}</a>
 {%endfor%}
+
+{%endblock%}
+
