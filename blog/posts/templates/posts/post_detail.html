@@ -8,7 +8,7 @@
         <p>{{post.content}}</p>
 
       </div><!-- /.blog-post -->
-
+      <a href="{% url 'post_update' post.id %}">Редактировать пост</a>      
 {%endblock%}
 
 {%block category%}

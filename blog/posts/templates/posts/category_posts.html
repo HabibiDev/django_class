@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {%block post%}
-	{%for post in post_list%}
+	{%for post in posts_list%}
       <div class="blog-post">
         <h2 class="blog-post-title"><a href="{% url 'post_detail' post.id %}">{{post.title}}</a></h2>
 
@@ -10,13 +10,13 @@
 
       </div><!-- /.blog-post -->
       <a href="{% url 'post_update' post.id %}">Редактировать пост</a>
+      <br><br><br>
+
 	{%endfor%}
 {%endblock%}
-
 {%block category%}
+	{%for category in categories%}
 
-{%for category in categories%}
-
-<a class="p-2 text-muted" href='{% url 'category_posts' category.id %}'>{{category.name}}</a>
-{%endfor%}
+		<a class="p-2 text-muted" href='{% url 'category_posts' category.id %}'>{{category.name}}</a>
+	{%endfor%}
 {%endblock%}
