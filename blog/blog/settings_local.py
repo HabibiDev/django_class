@@ -17,13 +17,14 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'INFO.log',
         },
         'mail_admins': {
-            'level': 'INFO',
+            'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
+            'email_backend':'django.core.mail.backends.filebased.EmailBackend'
         }
     },
     'loggers': {
@@ -33,7 +34,16 @@ LOGGING = {
         },
         'mylogger': {
             'handlers': ['file', 'console', 'mail_admins'],
-            'level': 'INFO',
+            'level': 'ERROR',
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
 }
+
+EMAIL_FILE_PATH = '/tmp/mass/'
+ADMINS = [('Anton','example@mail.ru')]
+INTERNAL_IPS = '127.0.0.1'

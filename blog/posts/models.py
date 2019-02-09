@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
+from tags.models import TaggedItem
+from django.urls import reverse
 
 # Create your models here.
 
@@ -20,9 +23,13 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
     status = models.IntegerField(choices = statuses, default = STATUS_DRAFT)
+    tags = GenericRelation(TaggedItem)
 
     class Meta:
         ordering = ['-updated_on']
+
+    def get_absolute_url(self):
+        return reverse('posts:post_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

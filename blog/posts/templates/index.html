@@ -116,6 +116,13 @@
       <h3 class="pb-3 mb-4 font-italic border-bottom">
         From the Firehose
       </h3>
+      <h1>{{request.user.username}}</h1>
+      <form action="{% url 'posts:login' %}" method='POST'>
+        {%csrf_token%}
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" value="login"> 
+      </form>
       {%block post%}
 
       <div class="blog-post">
@@ -168,7 +175,7 @@
  
       <nav class="blog-pagination">
         {%block navbar%}
-        <a class="btn btn-outline-primary" href="{% url 'add_post' %}">Add Post</a>
+        <a class="btn btn-outline-primary" href="{% url 'posts:add_post' %}">Add Post</a>
         {%endblock%}
       </nav>
 

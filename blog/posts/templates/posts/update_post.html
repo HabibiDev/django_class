@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {%block post%}
-<form action='/posts/post_update/' method='POST'>
+<form action='posts:post_update' method='POST'>
 	{%csrf_token%}
 	{{form.as_p}}
 	<button type='submit'>Save</button>
@@ -11,7 +11,7 @@
 {%block category%}
 	{%for category in categories%}
 
-		<a class="p-2 text-muted" href='{% url 'category_posts' category.id %}'>{{category.name}}</a>
+		<a class="p-2 text-muted" href="{% url 'posts:category_posts' category.id %}">{{category.name}}</a>
 	{%endfor%}
 {%endblock%}
 {%block navbar%}

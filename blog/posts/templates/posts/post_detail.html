@@ -1,14 +1,15 @@
 {% extends "index.html" %}
 {%block post%}
 	  <div class="blog-post">
-        <h2 class="blog-post-title"><a href="{% url  'post_detail' post.id %}">{{post.title}}</a></h2>
+        <h2 class="blog-post-title"><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
 
         <p class="blog-post-meta">{{post.created_on}} Категория:{{post.category}}</p>
 
         <p>{{post.content}}</p>
 
       </div><!-- /.blog-post -->
-      <a href="{% url 'post_update' post.id %}">Редактировать пост</a>      
+      <a href="{% url 'posts:post_update' post.id %}">Редактировать пост</a>   
+      <p>{{cnt}}</p>   
 {%endblock%}
 
 {%block category%}
