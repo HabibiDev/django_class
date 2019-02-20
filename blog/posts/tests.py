@@ -20,7 +20,7 @@ class PostTestCase(TestCase):
 		self.assertEquals(len(r.context['post_list']),1)
 
 	def test_post_add(self):
-		post_params = {'title':'title2', 'content' : 'content2', 'category' : self.category}
+		post_params = {'title':'title2', 'content' : 'content2', 'category' : self.category.id}
 		count_posts = Post.objects.count()
 		self.client.post('posts:add_post', data = post_params)
 		self.assertEquals(Post.objects.count(), count_posts + 1)

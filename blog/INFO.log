@@ -3322,3 +3322,296 @@ CREATE INDEX "tags_taggeditem_tag_id_31864f91" ON "tags_taggeditem" ("tag_id"); 
 (0.000) DECLARE "_django_curs_140536086259456_2" NO SCROLL CURSOR WITH HOLD FOR SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
 (0.001) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2019-02-09T09:49:24.929346+00:00'::timestamptz AND "django_session"."session_key" = 'qzc7o6swd7u7i4b7aneow2snqd3n0ed5'); args=(datetime.datetime(2019, 2, 9, 9, 49, 24, 929346, tzinfo=<UTC>), 'qzc7o6swd7u7i4b7aneow2snqd3n0ed5')
 (0.001) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2019-02-09T09:49:24.925345+00:00'::timestamptz AND "django_session"."session_key" = 'qzc7o6swd7u7i4b7aneow2snqd3n0ed5'); args=(datetime.datetime(2019, 2, 9, 9, 49, 24, 925345, tzinfo=<UTC>), 'qzc7o6swd7u7i4b7aneow2snqd3n0ed5')
+CREATE TABLE "django_migrations" ("id" serial NOT NULL PRIMARY KEY, "app" varchar(255) NOT NULL, "name" varchar(255) NOT NULL, "applied" timestamp with time zone NOT NULL); (params None)
+CREATE TABLE "django_content_type" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(100) NOT NULL, "app_label" varchar(100) NOT NULL, "model" varchar(100) NOT NULL); (params None)
+ALTER TABLE "django_content_type" ADD CONSTRAINT "django_content_type_app_label_model_76bd3d3b_uniq" UNIQUE ("app_label", "model"); (params ())
+CREATE TABLE "auth_permission" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(50) NOT NULL, "content_type_id" integer NOT NULL, "codename" varchar(100) NOT NULL); (params None)
+CREATE TABLE "auth_group" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(80) NOT NULL UNIQUE); (params None)
+CREATE TABLE "auth_group_permissions" ("id" serial NOT NULL PRIMARY KEY, "group_id" integer NOT NULL, "permission_id" integer NOT NULL); (params None)
+CREATE TABLE "auth_user" ("id" serial NOT NULL PRIMARY KEY, "password" varchar(128) NOT NULL, "last_login" timestamp with time zone NOT NULL, "is_superuser" boolean NOT NULL, "username" varchar(30) NOT NULL UNIQUE, "first_name" varchar(30) NOT NULL, "last_name" varchar(30) NOT NULL, "email" varchar(75) NOT NULL, "is_staff" boolean NOT NULL, "is_active" boolean NOT NULL, "date_joined" timestamp with time zone NOT NULL); (params None)
+CREATE TABLE "auth_user_groups" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "group_id" integer NOT NULL); (params None)
+CREATE TABLE "auth_user_user_permissions" ("id" serial NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "permission_id" integer NOT NULL); (params None)
+ALTER TABLE "auth_permission" ADD CONSTRAINT "auth_permission_content_type_id_2f476e4b_fk_django_co" FOREIGN KEY ("content_type_id") REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_permission" ADD CONSTRAINT "auth_permission_content_type_id_codename_01ab375a_uniq" UNIQUE ("content_type_id", "codename"); (params ())
+CREATE INDEX "auth_permission_content_type_id_2f476e4b" ON "auth_permission" ("content_type_id"); (params ())
+CREATE INDEX "auth_group_name_a6ea08ec_like" ON "auth_group" ("name" varchar_pattern_ops); (params ())
+ALTER TABLE "auth_group_permissions" ADD CONSTRAINT "auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" FOREIGN KEY ("group_id") REFERENCES "auth_group" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_group_permissions" ADD CONSTRAINT "auth_group_permissio_permission_id_84c5c92e_fk_auth_perm" FOREIGN KEY ("permission_id") REFERENCES "auth_permission" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_group_permissions" ADD CONSTRAINT "auth_group_permissions_group_id_permission_id_0cd325b0_uniq" UNIQUE ("group_id", "permission_id"); (params ())
+CREATE INDEX "auth_group_permissions_group_id_b120cbf9" ON "auth_group_permissions" ("group_id"); (params ())
+CREATE INDEX "auth_group_permissions_permission_id_84c5c92e" ON "auth_group_permissions" ("permission_id"); (params ())
+CREATE INDEX "auth_user_username_6821ab7c_like" ON "auth_user" ("username" varchar_pattern_ops); (params ())
+ALTER TABLE "auth_user_groups" ADD CONSTRAINT "auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_user_groups" ADD CONSTRAINT "auth_user_groups_group_id_97559544_fk_auth_group_id" FOREIGN KEY ("group_id") REFERENCES "auth_group" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_user_groups" ADD CONSTRAINT "auth_user_groups_user_id_group_id_94350c0c_uniq" UNIQUE ("user_id", "group_id"); (params ())
+CREATE INDEX "auth_user_groups_user_id_6a12ed8b" ON "auth_user_groups" ("user_id"); (params ())
+CREATE INDEX "auth_user_groups_group_id_97559544" ON "auth_user_groups" ("group_id"); (params ())
+ALTER TABLE "auth_user_user_permissions" ADD CONSTRAINT "auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_user_user_permissions" ADD CONSTRAINT "auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm" FOREIGN KEY ("permission_id") REFERENCES "auth_permission" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "auth_user_user_permissions" ADD CONSTRAINT "auth_user_user_permissions_user_id_permission_id_14a6b632_uniq" UNIQUE ("user_id", "permission_id"); (params ())
+CREATE INDEX "auth_user_user_permissions_user_id_a95ead1b" ON "auth_user_user_permissions" ("user_id"); (params ())
+CREATE INDEX "auth_user_user_permissions_permission_id_1fbb5f2c" ON "auth_user_user_permissions" ("permission_id"); (params ())
+CREATE TABLE "django_admin_log" ("id" serial NOT NULL PRIMARY KEY, "action_time" timestamp with time zone NOT NULL, "object_id" text NULL, "object_repr" varchar(200) NOT NULL, "action_flag" smallint NOT NULL CHECK ("action_flag" >= 0), "change_message" text NOT NULL, "content_type_id" integer NULL, "user_id" integer NOT NULL); (params None)
+ALTER TABLE "django_admin_log" ADD CONSTRAINT "django_admin_log_content_type_id_c4bce8eb_fk_django_co" FOREIGN KEY ("content_type_id") REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "django_admin_log" ADD CONSTRAINT "django_admin_log_user_id_c564eba6_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+CREATE INDEX "django_admin_log_content_type_id_c4bce8eb" ON "django_admin_log" ("content_type_id"); (params ())
+CREATE INDEX "django_admin_log_user_id_c564eba6" ON "django_admin_log" ("user_id"); (params ())
+ALTER TABLE "django_content_type" ALTER COLUMN "name" DROP NOT NULL; (params [])
+ALTER TABLE "django_content_type" DROP COLUMN "name" CASCADE; (params ())
+ALTER TABLE "auth_permission" ALTER COLUMN "name" TYPE varchar(255) USING "name"::varchar(255); (params [])
+ALTER TABLE "auth_user" ALTER COLUMN "email" TYPE varchar(254) USING "email"::varchar(254); (params [])
+ALTER TABLE "auth_user" ALTER COLUMN "last_login" DROP NOT NULL; (params [])
+ALTER TABLE "auth_user" ALTER COLUMN "username" TYPE varchar(150) USING "username"::varchar(150); (params [])
+ALTER TABLE "auth_user" ALTER COLUMN "last_name" TYPE varchar(150) USING "last_name"::varchar(150); (params [])
+CREATE TABLE "groups_group" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(120) NOT NULL); (params None)
+CREATE TABLE "groups_membership" ("id" serial NOT NULL PRIMARY KEY, "date_joined" date NOT NULL, "invite_reason" varchar(300) NOT NULL, "group_id" integer NOT NULL); (params None)
+CREATE TABLE "groups_person" ("id" serial NOT NULL PRIMARY KEY, "first_name" varchar(70) NOT NULL, "second_name" varchar(70) NOT NULL); (params None)
+ALTER TABLE "groups_membership" ADD COLUMN "person_id" integer NOT NULL; (params [])
+ALTER TABLE "groups_membership" ADD CONSTRAINT "groups_membership_group_id_dcb8901e_fk_groups_group_id" FOREIGN KEY ("group_id") REFERENCES "groups_group" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+CREATE INDEX "groups_membership_group_id_dcb8901e" ON "groups_membership" ("group_id"); (params ())
+CREATE INDEX "groups_membership_person_id_3a7b0f2d" ON "groups_membership" ("person_id"); (params ())
+ALTER TABLE "groups_membership" ADD CONSTRAINT "groups_membership_person_id_3a7b0f2d_fk_groups_person_id" FOREIGN KEY ("person_id") REFERENCES "groups_person" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+SET CONSTRAINTS "groups_membership_person_id_3a7b0f2d_fk_groups_person_id" IMMEDIATE; ALTER TABLE "groups_membership" DROP CONSTRAINT "groups_membership_person_id_3a7b0f2d_fk_groups_person_id"; (params ())
+ALTER TABLE "groups_membership" ADD CONSTRAINT "groups_membership_person_id_3a7b0f2d_fk_groups_person_id" FOREIGN KEY ("person_id") REFERENCES "groups_person" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+CREATE TABLE "posts_questions" ("id" serial NOT NULL PRIMARY KEY, "title" varchar(120) NOT NULL UNIQUE, "pub_date" date NOT NULL); (params None)
+CREATE INDEX "posts_questions_title_440eba58_like" ON "posts_questions" ("title" varchar_pattern_ops); (params ())
+ALTER TABLE "posts_questions" RENAME TO "posts_question"; (params ())
+CREATE TABLE "posts_post" ("id" serial NOT NULL PRIMARY KEY, "title" varchar(100) NOT NULL UNIQUE, "content" text NOT NULL, "keywords" text NOT NULL, "created_on" timestamp with time zone NOT NULL, "updated_on" date NOT NULL); (params None)
+CREATE INDEX "posts_post_title_32726515_like" ON "posts_post" ("title" varchar_pattern_ops); (params ())
+DROP TABLE "posts_question" CASCADE; (params ())
+ALTER TABLE "posts_post" ADD COLUMN "athour" varchar(100) DEFAULT %s NOT NULL UNIQUE; (params ['admin'])
+ALTER TABLE "posts_post" ALTER COLUMN "athour" DROP DEFAULT; (params [])
+CREATE INDEX "posts_post_athour_7ebdb301_like" ON "posts_post" ("athour" varchar_pattern_ops); (params ())
+CREATE TABLE "posts_category" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(120) NOT NULL UNIQUE, "is_active" boolean NOT NULL, "meta_keywords" text NOT NULL, "description" text NOT NULL); (params None)
+ALTER TABLE "posts_post" DROP COLUMN "athour" CASCADE; (params ())
+ALTER TABLE "posts_post" ADD COLUMN "status" integer DEFAULT %s NOT NULL; (params [100])
+ALTER TABLE "posts_post" ALTER COLUMN "status" DROP DEFAULT; (params [])
+ALTER TABLE "posts_post" ADD COLUMN "category_id" integer NULL; (params [])
+CREATE INDEX "posts_category_name_3f7ad975_like" ON "posts_category" ("name" varchar_pattern_ops); (params ())
+CREATE INDEX "posts_post_category_id_ab339803" ON "posts_post" ("category_id"); (params ())
+ALTER TABLE "posts_post" ADD CONSTRAINT "posts_post_category_id_ab339803_fk_posts_category_id" FOREIGN KEY ("category_id") REFERENCES "posts_category" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "posts_category" ALTER COLUMN "description" DROP NOT NULL; (params [])
+ALTER TABLE "posts_category" ALTER COLUMN "meta_keywords" DROP NOT NULL; (params [])
+ALTER TABLE "posts_category" ALTER COLUMN "description" SET DEFAULT %s, ALTER COLUMN "description" SET NOT NULL; (params [''])
+ALTER TABLE "posts_category" ALTER COLUMN "description" DROP DEFAULT; (params [])
+ALTER TABLE "posts_category" ALTER COLUMN "meta_keywords" SET DEFAULT %s, ALTER COLUMN "meta_keywords" SET NOT NULL; (params [''])
+ALTER TABLE "posts_category" ALTER COLUMN "meta_keywords" DROP DEFAULT; (params [])
+CREATE TABLE "django_session" ("session_key" varchar(40) NOT NULL PRIMARY KEY, "session_data" text NOT NULL, "expire_date" timestamp with time zone NOT NULL); (params None)
+CREATE INDEX "django_session_session_key_c0390e0f_like" ON "django_session" ("session_key" varchar_pattern_ops); (params ())
+CREATE INDEX "django_session_expire_date_a5c62663" ON "django_session" ("expire_date"); (params ())
+CREATE TABLE "tags_tag" ("id" serial NOT NULL PRIMARY KEY, "name" varchar(120) NOT NULL); (params None)
+CREATE TABLE "tags_taggeditem" ("id" serial NOT NULL PRIMARY KEY, "object_id" integer NOT NULL CHECK ("object_id" >= 0), "content_type_id" integer NOT NULL, "tag_id" integer NOT NULL); (params None)
+ALTER TABLE "tags_taggeditem" ADD CONSTRAINT "tags_taggeditem_content_type_id_03c84c71_fk_django_co" FOREIGN KEY ("content_type_id") REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+ALTER TABLE "tags_taggeditem" ADD CONSTRAINT "tags_taggeditem_tag_id_31864f91_fk_tags_tag_id" FOREIGN KEY ("tag_id") REFERENCES "tags_tag" ("id") DEFERRABLE INITIALLY DEFERRED; (params ())
+CREATE INDEX "tags_taggeditem_content_type_id_03c84c71" ON "tags_taggeditem" ("content_type_id"); (params ())
+CREATE INDEX "tags_taggeditem_tag_id_31864f91" ON "tags_taggeditem" ("tag_id"); (params ())
+(0.238) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC  LIMIT 21; args=()
+(0.032) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.129) INSERT INTO "posts_post" ("title", "category_id", "content", "keywords", "created_on", "updated_on", "status") VALUES ('post1', NULL, 'content1', '', '2019-02-20T16:16:41.742405+00:00'::timestamptz, '2019-02-20'::date, 10) RETURNING "posts_post"."id"; args=('post1', None, 'content1', '', datetime.datetime(2019, 2, 20, 16, 16, 41, 742405, tzinfo=<UTC>), datetime.date(2019, 2, 20), 10)
+(0.002) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC  LIMIT 21; args=()
+(0.052) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."title" = 'post1'; args=('post1',)
+(0.001) UPDATE "posts_post" SET "title" = 'post365', "category_id" = NULL, "content" = 'sdjfhjksdhsgj', "keywords" = '', "created_on" = '2019-02-20T16:16:41.742405+00:00'::timestamptz, "updated_on" = '2019-02-20'::date, "status" = 10 WHERE "posts_post"."id" = 5; args=('post365', 'sdjfhjksdhsgj', '', datetime.datetime(2019, 2, 20, 16, 16, 41, 742405, tzinfo=<UTC>), datetime.date(2019, 2, 20), 10, 5)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC  LIMIT 21; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 5; args=(5,)
+(0.001) UPDATE "posts_post" SET "title" = 'post365333', "category_id" = NULL, "content" = 'sdjfhjksdhsgj', "keywords" = '', "created_on" = '2019-02-20T16:16:41.742405+00:00'::timestamptz, "updated_on" = '2019-02-20'::date, "status" = 10 WHERE "posts_post"."id" = 5; args=('post365333', 'sdjfhjksdhsgj', '', datetime.datetime(2019, 2, 20, 16, 16, 41, 742405, tzinfo=<UTC>), datetime.date(2019, 2, 20), 10, 5)
+(0.117) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.017) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.062) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2019-02-20T16:37:39.949447+00:00'::timestamptz AND "django_session"."session_key" = 'p5d7fmocndhb8anjhedmaz4r9wgtb9a3'); args=(datetime.datetime(2019, 2, 20, 16, 37, 39, 949447, tzinfo=<UTC>), 'p5d7fmocndhb8anjhedmaz4r9wgtb9a3')
+(0.050) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 2; args=(2,)
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 2; args=(2,)
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.001) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 2; args=(2,)
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 2; args=(2,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.002) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 10; args=(10,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC  LIMIT 21; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 10; args=(10,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" WHERE "posts_post"."id" = 1; args=(1,)
+(0.001) UPDATE "posts_post" SET "title" = 'FirstPost1', "category_id" = 1, "content" = 'dflkhjvdflkjagl;v', "keywords" = '', "created_on" = '2019-01-30T16:37:39.830687+00:00'::timestamptz, "updated_on" = '2019-02-20'::date, "status" = 10 WHERE "posts_post"."id" = 1; args=('FirstPost1', 1, 'dflkhjvdflkjagl;v', '', datetime.datetime(2019, 1, 30, 16, 37, 39, 830687, tzinfo=<UTC>), datetime.date(2019, 2, 20), 10, 1)
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.002) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.002) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.005) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 10; args=(10,)
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category" WHERE "posts_category"."id" = 1; args=(1,)
+(0.001) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"; args=()
+(0.001) SELECT (1) AS "a" FROM "posts_category" WHERE "posts_category"."name" = 'gihsdflkg'  LIMIT 1; args=('gihsdflkg',)
+(0.027) INSERT INTO "posts_category" ("name", "is_active", "meta_keywords", "description") VALUES ('gihsdflkg', NULL, '', 'dhgtrhtrh') RETURNING "posts_category"."id"; args=('gihsdflkg', None, '', 'dhgtrhtrh')
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"  LIMIT 21; args=()
+(0.000) SELECT "posts_category"."id", "posts_category"."name", "posts_category"."is_active", "posts_category"."meta_keywords", "posts_category"."description" FROM "posts_category"  LIMIT 21; args=()
+(0.002) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) 
+            SELECT c.relname, c.relkind
+            FROM pg_catalog.pg_class c
+            LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+            WHERE c.relkind IN ('r', 'v')
+                AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+                AND pg_catalog.pg_table_is_visible(c.oid); args=None
+(0.000) SELECT "django_migrations"."app", "django_migrations"."name" FROM "django_migrations"; args=()
+(0.001) SELECT "posts_post"."id", "posts_post"."title", "posts_post"."category_id", "posts_post"."content", "posts_post"."keywords", "posts_post"."created_on", "posts_post"."updated_on", "posts_post"."status" FROM "posts_post" ORDER BY "posts_post"."updated_on" DESC; args=()

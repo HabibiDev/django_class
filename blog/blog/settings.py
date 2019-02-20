@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'groups',
     'debug_toolbar',
     'tags',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
